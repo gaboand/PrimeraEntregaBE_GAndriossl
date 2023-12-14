@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+import fs from 'fs/promises';
 
 class ProductManager {
   constructor(filePath) {
@@ -99,33 +99,4 @@ class ProductManager {
   }
 }
 
-async function example() {
-  const productManager = new ProductManager("./src/whiskies.json");
-
-  await productManager.addProduct({
-    title: 'Whisky Agregado',
-    description: 'Producto agregado',
-    price: 200,
-    thumbnail: 'imagen4.jpg',
-    code: 'code006',
-    stock: 25
-  });
-
-  console.log('Productos después de agregar uno nuevo:', productManager.getProducts());
-
-  const productIdToUpdate = 2;
-  const updatedFields = { price: 250 };
-  const result = await productManager.updateProduct(productIdToUpdate, updatedFields);
-
-  if (result) {
-    console.log(`Producto antes de la actualización:`, result.originalProduct);
-  }
-
-  await productManager.deleteProduct(1);
-
-  console.log('Productos después de eliminar el producto 1:', productManager.getProducts());
-}
-
-// example();
-
-export default ProductManager
+export default ProductManager;

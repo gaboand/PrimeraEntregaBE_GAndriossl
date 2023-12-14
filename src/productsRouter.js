@@ -18,22 +18,35 @@ router.get('/:pid', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  await productManager.addProduct(req.body); 
-  res.status(201).send({ message: 'Producto agregado' });
+  try {
+    await productManager.addProduct(req.body);
+    res.status(201).send({ message: 'Producto agregado' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al agregar el producto' });
+  }
 });
 
 router.put('/:pid', async (req, res) => {
-  const result = await productManager.updateProduct(parseInt(req.params.pid), req.body);
-  if (result) {
-    res.json(result);
-  } else {
-    res.status(404).send({ error: 'Producto no encontrado' });
+  try {
+    const result = await productManager.updateProduct(parseInt(req.params.pid), req.body);
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(404).send({ error: 'Producto no encontrado' });
+    }
+  } catch (error) {
+    res.status(500).send({ error: 'Error al actualizar el producto' });
   }
 });
 
 router.delete('/:pid', async (req, res) => {
-  await productManager.deleteProduct(parseInt(req.params.pid));
-  res.send({ message: 'Producto eliminado' });
+  try {
+    await productManager.deleteProduct(parseInt(req.params.pid));
+    res.send({ message: 'Producto eliminado' });
+  } catch (error) {
+    res.status(500).send({ error: 'Error al eliminar el producto' });
+  }
 });
-
+      
 export default router;
+      
